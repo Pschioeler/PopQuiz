@@ -8,9 +8,6 @@ This project, is a small quiz page, that turns an XML-file filled with questions
   
   <h1>PopQuiz PBW - Gruppe 1</h1>
   
-  <p>
-    Eksamensprojektet med udgangspunkt i Hard Skill station som en CASE!
-  </p>
 
   <h4>
     <a href="#om-projektet">Introduktion</a>
