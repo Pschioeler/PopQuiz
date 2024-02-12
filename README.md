@@ -44,19 +44,20 @@ We have taken on the task to make a small popquiz application. The purpose is to
 </details>
 
 <details>
-<summary>Dokumentation og Rapportering:</summary>
+<summary>Documentation & Report:</summary>
   
-Vi skal udarbejde en detaljeret akademisk rapport på max 25 sider og forberede en præsentation af det færdige projekt for HSS.
-Der er et projektmøde i projektuge 1, hvor projektplanen skal godkendes.
+A design breif of max 3 pages, a logbook of the development phases of approx. 2 pages as well as a reflection of approx. 2 pages in a single document
 
 </details>
 
 <details>
 <summary>Forventede Leverancer</summary>
   
-- Produkt via link til GIT.
-- Akademisk rapport på maksimalt 25 sider.
-- Præsentation til HSS.
+- Product via GitHub link.
+- Design breif max 3 pages.
+- logbook max 2 pages.
+- Reflektion  max 2 pages.
+- Presentation.
 
 </details>
 </div>
