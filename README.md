@@ -6,13 +6,13 @@ This project, is a small quiz page, that turns an XML-file filled with questions
  
   --- 
   
-  <h1>PopQuiz PBW - Gruppe 1</h1>
+  <h1>PopQuiz PBW - Group 1</h1>
   
 
   </div>
 
 <!-- OM PROJEKTET -->
-## 🗒️ Projekt Introduktion
+## 🗒️ Project Introduction
 <div id="om-projektet">
 We have taken on the task to make a small popquiz application. The purpose is to take an XML-file filled with questions, and then create a small online popquiz.
 <br><br>
@@ -34,7 +34,7 @@ A design breif of max 3 pages, a logbook of the development phases of approx. 2 
 </details>
 
 <details>
-<summary>Forventede Leverancer</summary>
+<summary>Delivery</summary>
   
 - Product via GitHub link.
 - Design breif max 3 pages.
