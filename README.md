@@ -9,20 +9,6 @@ This project, is a small quiz page, that turns an XML-file filled with questions
   <h1>PopQuiz PBW - Gruppe 1</h1>
   
 
-  <h4>
-    <a href="#om-projektet">Introduktion</a>
-  <span> · </span>
-    <a href="#resultat">Vores Produkt</a>
-  <span> · </span>
-      <a href="#installation">Installation</a>
-  <span> · </span>
-    <a href="#backend">Backend</a>
-  <span> · </span>
-    <a href="#frontend">Frontend</a>
-    <span> · </span>
-    <a href="#teamet">Teamet bag</a>
-  </h4>
-
   </div>
 
 <!-- OM PROJEKTET -->
