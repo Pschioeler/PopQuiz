@@ -75,6 +75,3 @@ A design breif of max 3 pages, a logbook of the development phases of approx. 2 
 
 ---
 
-<div align="center">
-  GG
-</div>
