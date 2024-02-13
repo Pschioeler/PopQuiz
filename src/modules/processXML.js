@@ -1,68 +1,47 @@
 const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
-const ejs = require('ejs');
 
-// Middleware-funktion til at behandle XML-filer
-const processXML = (req, res, next) => {
-    // Array til at gemme konverterede spørgsmål
+function processXML(req, res, next) {
+    const xmlFolder = path.join(__dirname, 'XML');
+    const xmlFiles = fs.readdirSync(xmlFolder);
+
+    // Array til at gemme spørgsmål
     req.questions = [];
 
-    // Sti til mappen med XML-filer (tilpas denne sti efter dit projekt)
-    const xmlFolder = path.join(__dirname, 'xml');
+    // Gennemgå hver XML-fil og behandle dens indhold
+    xmlFiles.forEach(file => {
+        const xmlFilePath = path.join(xmlFolder, file);
+        const xmlData = fs.readFileSync(xmlFilePath, 'utf-8');
 
-    // Læs alle XML-filer i mappen
-    fs.readdir(xmlFolder, (err, files) => {
-        if (err) {
-            console.error('Fejl ved læsning af XML-filer:', err);
-            return res.status(500).send('Der opstod en fejl');
-        }
+        // Konverter XML til JavaScript-objekt
+        xml2js.parseString(xmlData, (err, result) => {
+            if (err) {
+                console.error('Fejl ved konvertering af XML til JavaScript-objekt:', err);
+                return;
+            }
 
-        // Gennemgå hver XML-fil
-        files.forEach(file => {
-            // Ignorer filer der ikke slutter på .xml
-            if (!file.endsWith('.xml')) return;
+            // Gennemgå hver quiz i XML-filen
+            result.quiz.question.forEach(question => {
+                // Kontroller om question.answer eksisterer
+                if (question.answer && question.answer.length > 0) {
+                    // Opret et nyt objekt til at gemme spørgsmål, svarmuligheder og korrekte svar
+                    const questionObject = {
+                        kategori: result.quiz.topic[0], // Tilføj kategorien for spørgsmålet
+                        spørgsmål: question.questiontext[0],
+                        svarMuligheder: question.answer.map(answer => answer.answertext[0]),
+                        korrekteSvar: question.answer.filter(answer => answer.correct && answer.correct[0] === 'True').map(answer => answer.answertext[0])
+                    };
 
-            // Læs indholdet af XML-filen
-            fs.readFile(path.join(xmlFolder, file), (err, data) => {
-                if (err) {
-                    console.error(`Fejl ved læsning af filen ${file}:`, err);
-                    return;
+                    // Tilføj det nye spørgsmål til req.questions-arrayet
+                    req.questions.push(questionObject);
                 }
-
-                // Konverter XML til JSON
-                xml2js.parseString(data, (err, result) => {
-                    if (err) {
-                        console.error(`Fejl ved konvertering af XML til JSON for filen ${file}:`, err);
-                        return;
-                    }
-
-                    // Hent spørgsmål fra JSON-resultatet
-                    const quiz = result.quiz;
-                    if (!quiz || !quiz.question) {
-                        console.error(`Ugyldigt XML-format for filen ${file}`);
-                        return;
-                    }
-                    
-                    // Gennemgå hver spørgsmål og konverter til HTML vha. EJS
-                    quiz.question.forEach(questionData => {
-                        ejs.renderFile('question_template.ejs', { question: questionData }, (err, html) => {
-                            if (err) {
-                                console.error(`Fejl ved konvertering af spørgsmål til HTML for filen ${file}:`, err);
-                                return;
-                            }
-                            
-                            // Tilføj det konverterede spørgsmål til arrayet
-                            req.questions.push(html);
-                        });
-                    });
-                });
             });
         });
     });
 
-    // Fortsæt til næste middleware eller rutehåndtering
+    // Fortsæt til næste middleware
     next();
-};
+}
 
 module.exports = processXML;
