@@ -13,7 +13,7 @@ app.use(morgan("dev"));
 app.use(expressLayouts);
 
 // Definer en port vi vil lytte på
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 8900;
 
 // Middleware til at tjene statiske filer fra 'public' mappen
 app.use(express.static(path.join(__dirname, "public")));
