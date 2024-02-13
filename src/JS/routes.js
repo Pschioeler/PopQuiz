@@ -18,8 +18,8 @@ router.get("/admin/view", (req, res) => {
   res.render("admin/view", { title: "All XML" });
 });
 
-router.get('/questions', (req, res) => {
-  res.json(req.questions);
+router.get('/quiz', (req, res) => {
+  res.render("quiz", {questions: req.questions});
 });
 
 // Admin-relaterede routes

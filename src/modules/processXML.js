@@ -28,6 +28,7 @@ function processXML(req, res, next) {
                     // Opret et nyt objekt til at gemme spørgsmål, svarmuligheder og korrekte svar
                     const questionObject = {
                         kategori: result.quiz.topic[0], // Tilføj kategorien for spørgsmålet
+                        type: question.type[0],
                         spørgsmål: question.questiontext[0],
                         svarMuligheder: question.answer.map(answer => answer.answertext[0]),
                         korrekteSvar: question.answer.filter(answer => answer.correct && answer.correct[0] === 'True').map(answer => answer.answertext[0])
