@@ -3,7 +3,7 @@ const path = require('path');
 const xml2js = require('xml2js');
 
 function processXML(req, res, next) {
-    const xmlFolder = path.join(__dirname, 'XML');
+    const xmlFolder = path.join(__dirname, '../xml');
     const xmlFiles = fs.readdirSync(xmlFolder);
 
     // Array til at gemme spørgsmål
