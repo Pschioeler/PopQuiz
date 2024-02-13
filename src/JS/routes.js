@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const PATH = require("path");
 
 const adminController = require("../modules/admin.js");
 
-router.get("/", (req, res) => {
+router.get("/admin/", (req, res) => {
   res.render("index", { title: "Hjem" });
 });
 

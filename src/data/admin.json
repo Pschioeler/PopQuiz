@@ -1,0 +1,14 @@
+[
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "1234",
+      "timeLogs": []
+    },
+    {
+      "id": 2,
+      "username": "Richard",
+      "password": "password",
+      "timeLogs": []
+    }
+  ]
