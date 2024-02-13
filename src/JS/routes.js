@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const processXML = require('../modules/processXML.js');
 const adminController = require("../modules/admin.js");
+
+router.use(processXML);
 
 router.get("/", (req, res) => {
   res.render("index", { title: "Hjem" });
@@ -13,6 +16,10 @@ router.get("/admin/upload", (req, res) => {
 
 router.get("/admin/view", (req, res) => {
   res.render("admin/view", { title: "All XML" });
+});
+
+router.get('/quiz', (req, res) => {
+  res.render("quiz", {questions: req.questions});
 });
 
 // Admin-relaterede routes

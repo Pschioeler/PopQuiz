@@ -2,15 +2,18 @@
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
+const expressLayouts = require("express-ejs-layouts");
 
 // Opret en ny express applikation
 const app = express();
 
 // Logger alle requests til serveren
 app.use(morgan("dev"));
+//Brug layouts
+app.use(expressLayouts);
 
 // Definer en port vi vil lytte på
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8900;
 
 // Middleware til at tjene statiske filer fra 'public' mappen
 app.use(express.static(path.join(__dirname, "public")));
