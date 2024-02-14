@@ -2,6 +2,8 @@ var express = require("express");
 var path = require("path");
 var router = express.Router();
 const fs = require('fs');
+const processXML = require('./modules/processXML.js');
+router.use(processXML);
 const summaryModule = require("./modules/summary.js");
 const { displayAnswers } = require("./modules/summary.js");
 
@@ -91,7 +93,7 @@ router.post("/upload", (req, res) =>{
 
 router.get("/dashboard", (req, res) =>{
     if(req.session.user){
-        res.render("dashboard", {user:req.session.user})
+        res.render("dashboard", {user:req.session.user, questions: req.questions})
     } else {
         res.send("Invalid Code")
     }

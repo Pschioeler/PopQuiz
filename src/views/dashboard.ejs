@@ -1,2 +1,40 @@
-<h1>Pop Quiz </h1>
+<h1>Alle kategorier: </h1>
 <h3>Quiz Code: <%=locals.user?user:"User"%></h3>
+<% if (questions.length > 0) { %>
+    <% const randomIndex = Math.floor(Math.random() * questions.length); %>
+    <% const question = questions[randomIndex]; %>
+    
+    <span>Kategori: <%= question.kategori %></span>
+    <h2><%= question.spørgsmål %></h2>
+
+    <% if (question.type === 'shortanswer') { %>
+        <!-- Vis et inputfelt til shortanswer spørgsmål -->
+        <form action="/submit" method="POST">
+            <input type="hidden" name="question" value="<%= question.spørgsmål %>">
+            <input type="text" name="answer" placeholder="Skriv dit svar her" required>
+            <% question.korrekteSvar.forEach(answer => { %>
+                <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+              <% }); %>
+            <button type="submit">Næste Spørgsmål</button>
+        </form>
+    <% } else if (question.type === 'multichoice') { %>
+        <!-- Vis svarmulighederne for multichoice spørgsmål -->
+        <form action="/submit" method="POST">
+            <ul>
+            <input type="hidden" name="question" value="<%= question.spørgsmål %>">
+                <% question.svarMuligheder.forEach(svarMulighed => { %>
+                    <li>
+                        <input type="checkbox" id="<%= svarMulighed %>" name="answer" value="<%= svarMulighed %>">
+                        <label for="<%= svarMulighed %>"><%= svarMulighed %></label>
+                    </li>
+                <% }); %>
+                <% question.korrekteSvar.forEach(answer => { %>
+                    <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+                  <% }); %>
+            </ul>
+            <button type="submit">Næste Spørgsmål</button>
+        </form>
+    <% } %>
+<% } else { %>
+    <p>Boohoo, ingen spørgsmål til rådighed. Græd over det.</p>
+<% } %>
