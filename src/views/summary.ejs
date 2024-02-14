@@ -1,0 +1,23 @@
+<div>
+    <h3>Tak fordi du deltog i quizzen</h3>
+    <!-- Brug EJS-syntaks til at indsætte JavaScript-koden -->
+        <!-- Brug EJS-syntaks til at indsætte JavaScript-koden -->
+        <% answers.forEach(answer => { %>
+            <p>Spørgsmål: <%= answer.question %></p>
+            <p>Svarmuligheder: <%= answer.answerOptions.join(", ") %></p>
+            <!-- Andre attributter for svar kan også vises her -->
+        <% }) %>
+    <button id="downloadButton">Download</button>
+</div>
+<script src="../modules/summary.js"></script>
+<script>
+    // Indsæt JavaScript-kode direkte i et script-segment
+    document.getElementById('downloadButton').addEventListener('click', async function() {
+        try {
+            // Kald downloadResults() når knappen klikkes
+            await downloadResults();
+        } catch (error) {
+            console.error('Fejl ved download:', error);
+        }
+    });
+</script>

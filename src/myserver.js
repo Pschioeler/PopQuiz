@@ -5,7 +5,7 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const {v4:uuidv4} = require("uuid");
 const app = express();
-const port = 3000;
+const port = 5000;
 const router = require("./router");
 const bodyParser = require('body-parser');
 
@@ -15,6 +15,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Static Files aka css
 app.use(express.static(path.join(__dirname, "../public")));
+//Tilføj modules mappen så serveren kan få adgang til moduler fra /modules mappen
+app.use('/modules', express.static(path.join(__dirname, "modules"))); // Tilføj denne linje
 app.use("/css", express.static(__dirname + "public/css"));
 
 
@@ -28,6 +30,14 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+//tilføj xslt fil for at serveren kan håndtere download modulet
+app.get('/downloadTemplate.xslt', (req, res) => {
+    // Sti til XSLT-filen
+    const xsltFilePath = path.join(__dirname, 'downloadTemplate.xslt');
+    // Sender XSLT-filen som svar
+    res.sendFile(xsltFilePath);
+});
 
 app.use("/route", router);
 
