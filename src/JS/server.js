@@ -3,6 +3,8 @@ const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
+const bodyParser = require("body-parser");
+
 
 // Opret en ny express applikation
 const app = express();
@@ -11,6 +13,8 @@ const app = express();
 app.use(morgan("dev"));
 //Brug layouts
 app.use(expressLayouts);
+//Form submissions
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Definer en port vi vil lytte på
 const PORT = process.env.PORT || 8900;

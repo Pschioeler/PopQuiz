@@ -9,19 +9,27 @@
         <% if (question.type === 'shortanswer') { %>
             <!-- Vis et inputfelt til shortanswer spørgsmål -->
             <form action="/submit" method="POST">
+                <input type="hidden" name="question" value="<%= question.spørgsmål %>">
                 <input type="text" name="answer" placeholder="Skriv dit svar her" required>
+                <% question.korrekteSvar.forEach(answer => { %>
+                    <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+                  <% }); %>
                 <button type="submit">Næste Spørgsmål</button>
             </form>
         <% } else if (question.type === 'multichoice') { %>
             <!-- Vis svarmulighederne for multichoice spørgsmål -->
             <form action="/submit" method="POST">
                 <ul>
+                <input type="hidden" name="question" value="<%= question.spørgsmål %>">
                     <% question.svarMuligheder.forEach(svarMulighed => { %>
                         <li>
                             <input type="checkbox" id="<%= svarMulighed %>" name="answer" value="<%= svarMulighed %>">
                             <label for="<%= svarMulighed %>"><%= svarMulighed %></label>
                         </li>
                     <% }); %>
+                    <% question.korrekteSvar.forEach(answer => { %>
+                        <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+                      <% }); %>
                 </ul>
                 <button type="submit">Næste Spørgsmål</button>
             </form>
