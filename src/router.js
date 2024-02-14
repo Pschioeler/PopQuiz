@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var router = express.Router();
 const fs = require('fs');
+const summaryModule = require("./modules/summary");
 
 const adminFilePath = path.join(__dirname, "./data/admin.json");
 const userFilePath = path.join(__dirname, "./data/users.json");
@@ -108,5 +109,12 @@ router.get("/logout", (req, res) =>{
 })
 
 //create a route to access summery.ejs
+router.get("/summary", (req, res) =>{
+    if(req.session.user){
+        res.render("summary", {user:req.session.user})
+    } else {
+        res.send("Invalid Code")
+    }
+})
 
 module.exports = router;
