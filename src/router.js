@@ -2,6 +2,8 @@ var express = require("express");
 var path = require("path");
 var router = express.Router();
 const fs = require('fs');
+const summaryModule = require("./modules/summary.js");
+const { displayAnswers } = require("./modules/summary.js");
 
 const adminFilePath = path.join(__dirname, "./data/admin.json");
 const userFilePath = path.join(__dirname, "./data/users.json");
@@ -107,5 +109,21 @@ router.get("/logout", (req, res) =>{
     })
 })
 
+//create a route to access summery.ejs
+router.get("/summary", async (req, res) =>{
+    if(req.session.user){
+        try {
+            // Hent svar ved hjælp af displayAnswers funktionen
+            const answers = summaryModule.displayAnswers();
+            // Send svar data til visningen
+            res.render("summary", {user:req.session.user, answers: answers});
+        } catch (error) {
+            console.error('Fejl ved hentning af svar:', error);
+            res.status(500).send('Fejl ved hentning af svar');
+        }
+    } else {
+        res.send("Invalid Code")
+    }
+})
 
 module.exports = router;
