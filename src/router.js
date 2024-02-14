@@ -107,5 +107,6 @@ router.get("/logout", (req, res) =>{
     })
 })
 
+//create a route to access summery.ejs
 
 module.exports = router;

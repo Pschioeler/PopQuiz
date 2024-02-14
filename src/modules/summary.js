@@ -1,6 +1,12 @@
 //import possible other dependable modules
 function displayAnswers(questionCount){
     //do some display magic here with each answered question
+    answer = {
+        question,
+        answerOptions,
+        correctAnswers,
+        usersAnswers
+    }
 }
 async function generateDataForDownload() {
     // The content in this function must follow the XSLT file format
