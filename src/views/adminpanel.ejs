@@ -1,0 +1,16 @@
+<h1>Admin Panel</h1>
+<h3>Logged in as: <%=locals.user?user:"User"%></h3>
+<a href="/route/logout">logout</a>
+
+<h2>Upload a File</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xml">
+        <button type="submit">Upload</button>
+</form>
+
+<h2>List of Files</h2>
+    <ul>
+        <% files.forEach(file => { %>
+            <li><%= file %></li>
+        <% }); %>
+</ul>

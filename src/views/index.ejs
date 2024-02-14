@@ -1,0 +1,26 @@
+<div class="center-div" id="login">
+    
+    <div class="container">
+        <h3>Use a refereal code to take quiz</h3>
+        <% if(locals.logout){%>
+            <div class="logoutText">
+                <%= logout %>
+            </div>
+        <% } %>
+        <form action="/route/user" method="post">
+            <label for="referalcode">Refereal code</label>
+            <input type="text" id="referalcode" name="referalcode" placeholder="Enter Referal Code..." required>
+            <button type="submit" class="loginbtn"> Start </button>  
+        </form>
+        <div class="break"></div>
+        <h3>Or login as admin</h3>
+        <form action="/route/login" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" placeholder="Enter Password" required>
+            <button type="submit" class="loginbtn"> Login</button>  
+        </form>
+    </div>
+</div>
+
