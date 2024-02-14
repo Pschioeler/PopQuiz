@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-</head>
-<body>
-    <h1>Web-udvikling Quizzen</h1>
+<h1>Web-udvikling Quizzen</h1>
     <% if (questions.length > 0) { %>
         <% const randomIndex = Math.floor(Math.random() * questions.length); %>
         <% const question = questions[randomIndex]; %>
@@ -17,19 +9,27 @@
         <% if (question.type === 'shortanswer') { %>
             <!-- Vis et inputfelt til shortanswer spørgsmål -->
             <form action="/submit" method="POST">
+                <input type="hidden" name="question" value="<%= question.spørgsmål %>">
                 <input type="text" name="answer" placeholder="Skriv dit svar her" required>
+                <% question.korrekteSvar.forEach(answer => { %>
+                    <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+                  <% }); %>
                 <button type="submit">Næste Spørgsmål</button>
             </form>
         <% } else if (question.type === 'multichoice') { %>
             <!-- Vis svarmulighederne for multichoice spørgsmål -->
             <form action="/submit" method="POST">
                 <ul>
+                <input type="hidden" name="question" value="<%= question.spørgsmål %>">
                     <% question.svarMuligheder.forEach(svarMulighed => { %>
                         <li>
                             <input type="checkbox" id="<%= svarMulighed %>" name="answer" value="<%= svarMulighed %>">
                             <label for="<%= svarMulighed %>"><%= svarMulighed %></label>
                         </li>
                     <% }); %>
+                    <% question.korrekteSvar.forEach(answer => { %>
+                        <input type="hidden" name="korrekteSvar" value="<%= answer %>">
+                      <% }); %>
                 </ul>
                 <button type="submit">Næste Spørgsmål</button>
             </form>
