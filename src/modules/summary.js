@@ -26,6 +26,7 @@ function generateMockAnswers(){
 function displayAnswers(){
     //do some display magic here with each answered question
     var answersToDisplay = generateMockAnswers();
+    return answersToDisplay;
 }
 // Funktion til at konvertere et array af svarobjekter til XML
 function convertArrayToXML(data) {
@@ -103,4 +104,14 @@ async function downloadResults() {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    // Eksporter funktioner, hvis det er i Node.js-miljøet
+    module.exports = {
+        downloadResults: downloadResults,
+        displayAnswers: displayAnswers,
+        generateDataForDownload: generateDataForDownload,
+        convertArrayToXML: convertArrayToXML
+    };
 }
