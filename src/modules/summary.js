@@ -23,7 +23,10 @@ function getXSLTStylesheetToStyleDownloadedFile() {
         });
 }
 
-function transformXMLToXSLFO(xmlData, xsltStylesheet){
+function transformXMLToXSLFO(){
+    const xmlData = generateDataForDownload();
+    const xsltStylesheet = getXSLTStylesheetToStyleDownloadedFile();
+
     const xsltProcessor = new XSLTProcessor();
     const parser = new DOMParser();
     const xsltDocument = parser.parseFromString(xsltStylesheet, "text/xml");
@@ -33,7 +36,8 @@ function transformXMLToXSLFO(xmlData, xsltStylesheet){
     return xslFO;
 }
 
-function serializeXSLFOToString(xslFO) {
+function serializeXSLFOToString() {
+    const xslFO = transformXMLToXSLFO();
     // Konverter XSL-FO til en streng
     const serializer = new XMLSerializer();
     const xslFOString = serializer.serializeToString(xslFO);
@@ -47,9 +51,9 @@ function downloadResults(fileName){
 
     const xsltStyleSheet = getXSLTStylesheetToStyleDownloadedFile();
 
-    const xslFO = transformXMLToXSLFO(fileContentAsXML, xsltStyleSheet);
+    const xslFO = transformXMLToXSLFO();
 
-    const xslFOString = serializeXSLFOToString(xslFO);
+    const xslFOString = serializeXSLFOToString();
 
     const file = new Blob([xslFOString], {type: "application/pdf"});
     const downloadLink = document.createElement("a");
@@ -59,10 +63,8 @@ function downloadResults(fileName){
     downloadLink.download = fileName;
 
     document.body.appendChild(downloadLink);
-
     // Simuler klik på downloadlink for at starte download
     downloadLink.click();
-
     // Fjern downloadlink fra DOM'en
     document.body.removeChild(downloadLink);
 }
