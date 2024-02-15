@@ -80,6 +80,11 @@ router.post("/upload", (req, res) => {
       } else if (err) {
         res.status(500).send("Server fejl ved upload");
       } else {
+        if (!req.file) {
+          // No file uploaded, handle this case
+          res.status(400).send("No file uploaded");
+          return;
+        }
         // Flyt fil fra midlertidig opbevaring til endelig destination
         const tempPath = req.file.path;
         const targetPath = path.join(__dirname, "./xml", req.file.originalname);
