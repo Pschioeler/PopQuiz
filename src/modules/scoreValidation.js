@@ -1,3 +1,15 @@
+const { processXML } = require('../modules/processXML');
+
+async function shuffle() {
+    try {
+        const questions = await processXML();
+        console.log("Questions loaded", questions);
+        // Her kan du gøre yderligere initialisering med dine spørgsmål
+    } catch (error) {
+        console.error("Failed to process XML files:", error);
+    }
+}
+
 //Funktion hvis der er flere korrekte svar og bruger svar
 function arraysEqual(arr1, arr2) {
     if (arr1.length !== arr2.length) return false;
@@ -6,7 +18,8 @@ function arraysEqual(arr1, arr2) {
     return sortedArr1.every((value, index) => value === sortedArr2[index]);
 }
 
-function checkAnswers(questions) {
+function checkAnswers() {
+    const questions = shuffle();
     // Iterate igennem question array
     questions.forEach((question, index) => {
         // Tjek om bruger svar er array
@@ -23,6 +36,7 @@ function checkAnswers(questions) {
                 console.log(`Question ${index + 1}: Incorrect!`);
             }
         } else {
+            question.korrekt = false;
             console.log(`Question ${index + 1}: No user answers provided.`);
         }
     });
