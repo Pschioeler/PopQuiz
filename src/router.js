@@ -3,11 +3,10 @@ var path = require("path");
 const multer = require("multer");
 var router = express.Router();
 const fs = require("fs");
-const processXML = require("./modules/processXML.js");
-router.use(processXML);
+
 const summaryModule = require("./modules/summary.js");
 const { displayAnswers } = require("./modules/summary.js");
-
+const { processXML } = require("./modules/processXML");
 const adminFilePath = path.join(__dirname, "./data/admin.json");
 const userFilePath = path.join(__dirname, "./data/users.json");
 const xmlFilePath = path.join(__dirname, "./xml");
@@ -118,14 +117,21 @@ router.post("/delete/:fileName", (req, res) => {
   }
 });
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", async (req, res) => {
   if (req.session.user) {
-    res.render("dashboard", {
-      user: req.session.user,
-      questions: req.questions,
-    });
+    try {
+      // Brug processXML til at hente og blande spørgsmålene
+      const questions = await processXML();
+      res.render("dashboard", {
+        user: req.session.user,
+        questions: questions,
+      });
+    } catch (err) {
+      console.error("Error loading and processing XML files:", err);
+      res.status(500).send("Unable to load questions");
+    }
   } else {
-    res.send("Invalid Code");
+    res.send("Unauthorized User");
   }
 });
 
