@@ -1,16 +1,23 @@
-<h1>Admin Panel</h1>
-<h3>Logged in as: <%=locals.user?user:"User"%></h3>
-<a href="/route/logout">logout</a>
+<div class="admin-panel">
+  <h1 class="admin-title">Admin Panel</h1>
+  <div class="user-info">Logged in as: <%=locals.user?user:"User"%></div>
+  <a href="/route/logout" class="btn-logout">logout</a>
+</div>
 
 <h2>Upload a File</h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".xml">
-        <button type="submit">Upload</button>
+<form action="/route/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="xmlFile" accept=".xml" />
+  <button type="submit">Upload</button>
 </form>
 
 <h2>List of Files</h2>
-    <ul>
-        <% files.forEach(file => { %>
-            <li><%= file %></li>
-        <% }); %>
+<ul>
+  <% files.forEach(file => { %>
+  <li>
+    <%= file %>
+    <form action="/route/delete/<%= file %>" method="post">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  <% }); %>
 </ul>
