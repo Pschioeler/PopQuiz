@@ -5,7 +5,7 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const {v4:uuidv4} = require("uuid");
 const app = express();
-const port = 5000;
+const port = 8000;
 const router = require("./router");
 const bodyParser = require('body-parser');
 

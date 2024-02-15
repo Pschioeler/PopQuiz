@@ -2,12 +2,21 @@ const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
 
+// Funktion til at blande et array i tilfældig rækkefølge
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function processXML(req, res, next) {
     const xmlFolder = path.join(__dirname, '../xml');
     const xmlFiles = fs.readdirSync(xmlFolder);
 
     // Array til at gemme spørgsmål
-    req.questions = [];
+    const questions = [];
 
     // Gennemgå hver XML-fil og behandle dens indhold
     xmlFiles.forEach(file => {
@@ -31,18 +40,24 @@ function processXML(req, res, next) {
                         type: question.type[0],
                         spørgsmål: question.questiontext[0],
                         svarMuligheder: question.answer.map(answer => answer.answertext[0]),
-                        korrekteSvar: question.answer.filter(answer => answer.correct && answer.correct[0] === 'True').map(answer => answer.answertext[0])
+                        korrekteSvar: question.answer.filter(answer => answer.correct && answer.correct[0] === 'True').map(answer => answer.answertext[0]),
+                        userAnswers: []
                     };
 
-                    // Tilføj det nye spørgsmål til req.questions-arrayet
-                    req.questions.push(questionObject);
+                    // Tilføj det nye spørgsmål til questions-arrayet
+                    questions.push(questionObject);
                 }
             });
         });
     });
-
-    // Fortsæt til næste middleware
     next();
 }
+function questionArray() {
+    // Bland spørgsmålene i tilfældig rækkefølge
+    const shuffledQuestions = shuffleArray(questions);
+    console.log(shuffledQuestions);
+    
+    return shuffledQuestions;
+}
 
-module.exports = processXML;
+module.exports = {processXML: processXML, questionArray};
