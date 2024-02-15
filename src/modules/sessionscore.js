@@ -1,9 +1,9 @@
 function validateAnswersAndScore(userAnswer, correctAnswers) {
     //Keeping track of sum of possible points for later % calucation
-    let totalPoints = localStorage.getItem('totalPoints');
+    let totalPoints = req.session.totalPoints;
     totalPoints = totalPoints ? parseInt(totalPoints) : 0;
-    // Initialize points to zero if not already present in localStorage
-    let points = localStorage.getItem('points');
+    // Initialize points to zero if not already present in session
+    let points = req.session.points;
     points = points ? parseInt(points) : 0;
     let isCorrect;
 
@@ -12,7 +12,6 @@ function validateAnswersAndScore(userAnswer, correctAnswers) {
         isCorrect = userAnswer.toLowerCase() === correctAnswers.toLowerCase();
         totalPoints++;
         points = isCorrect ? points + 1 : points - 1;
-        localStorage.setItem('points', points.toString());
     } //Validation if multiple choice has one answer but the user answered multiple
     else if (typeof userAnswer === 'object' && typeof correctAnswers === 'string') {
         userAnswer.forEach(answer => {
@@ -23,7 +22,6 @@ function validateAnswersAndScore(userAnswer, correctAnswers) {
             }
         });
         totalPoints++;
-        localStorage.setItem('points', points.toString());
     }//Validation for multiple choice with multiple answers
     else if (typeof userAnswer === 'object' && typeof correctAnswers === 'object') {
         let score = 0;
@@ -36,7 +34,6 @@ function validateAnswersAndScore(userAnswer, correctAnswers) {
         }
         totalPoints += correctAnswers.length;
         points += score;
-        localStorage.setItem('points', points.toString());
     } //Validation for multiple solutions with one answer
     else if (typeof userAnswer === 'string' && typeof correctAnswers === 'object') {
          // Conversion for comparison
@@ -52,7 +49,6 @@ function validateAnswersAndScore(userAnswer, correctAnswers) {
              points -= correctChoices.length + 1;
          }
         totalPoints += correctAnswers.length;
-        localStorage.setItem('points', points.toString());
     }
     return { totalPoints, points };
 }
